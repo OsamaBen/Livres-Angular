@@ -1,0 +1,74 @@
+.c1 {
+  padding-top: 150px;
+  height: 70%;
+  font-size: 12px;
+  color: white;
+  background-image:url('../../assets/images/demo/backgrounds/01.jpg') ;
+}
+
+.c2 {
+  color: #ffffff;
+  font-size: 30px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bolder;
+}
+
+.c3 {
+  background-color: #82B440;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  border: none ;
+  border-radius: 50px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+.c4:hover {
+  background-color: #3B5998;
+  color: white;
+  border-radius: 50px;
+}
+.c3:hover {
+  background-color: white;
+  color: #3B5998;
+  border-radius: 50px;
+}
+.c4 {
+  background-color: white ;
+  padding: 20px;
+  font-weight: bold;
+  color: #82B440;
+  border: none ;
+  border-radius: 50px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.margLeft {
+  margin-left: 300px;
+}
+
+.container {
+  padding: 0px;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: 100%;
+}
+
+.bo {
+  background-image: url('../../assets/images/demo/backgrounds/01.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80%;
+  width: 100%;
+}
+
+.shad {
+  padding-left: 300px;
+  align-items: center;
+  background: rgba(0,0,0,.55);
+  height: 100%;
+}

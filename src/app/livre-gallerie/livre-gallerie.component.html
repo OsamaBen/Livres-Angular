@@ -1,0 +1,58 @@
+<link href="../../assets/css/layout.css" rel="stylesheet" type="text/css" media="all">
+
+<div class="wrapper row4" >
+  <div class="hoc container clear" >
+    <h4 style="color: #82B440;font-size: 50px;font-weight: bold; text-shadow: 5px 5px 5px #405779;margin-bottom: 40px ;text-decoration: underline;">Gallerie  </h4>
+
+    <ul class="nospace elements" >
+      <li *ngFor="let l of livres; index as i" class="one_third" [ngClass]="{'first': i%3==0 }" style="margin-bottom: 50px">
+        <article style="height: 650px">
+          <figure>
+            <img src="{{l.img}}" alt="{{l.titre}}" style="width:100%;">
+            <figcaption><a (click)="showDetails(l.id)"> Details &raquo;</a></figcaption>
+          </figure>
+          <div class="txtwrap" style="height: 200px;">
+            <h6 class="heading">{{l.titre}}</h6>
+            <p>{{l.description | slice:0:100}} ...</p>
+          </div>
+        </article>
+      </li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>
+
+
+<nz-modal  *ngIf="isVisible" [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="annuler()">
+  <ng-template #modalTitle>
+    <h6 style="color: #1890ff "> Details du livre </h6>
+  </ng-template>
+
+  <ng-template #modalContent>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 img">
+          <img [src]="livreToShow.img"  alt="" class="img-rounded">
+        </div>
+        <div class="col-md-6 details">
+          <blockquote>
+            <h5 style="color: #00ACEE;">{{livreToShow.titre}}</h5>
+            <small><cite title="Source Title">  By : {{livreToShow.auteur}}<i class="icon-map-marker"></i></cite></small>
+          </blockquote>
+          <p>
+            {{livreToShow.description}}
+          </p><br>
+          <span class="badge" [ngClass]=" (livreToShow.statut === 'Disponible') ?  'badge-success' : 'badge-secondary' ">{{livreToShow.statut}} </span>
+        </div>
+      </div>
+    </div>
+
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <span> </span>
+    <button nz-button nzType="default" (click)="annuler()" >Close</button>
+  </ng-template>
+</nz-modal>

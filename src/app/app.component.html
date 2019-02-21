@@ -1,0 +1,239 @@
+<!-- NG-ZORRO -->
+<!--
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
+    <div class="logo" style="color: aliceblue;font-family: pacifico">
+      Benbaha Osama
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu>
+        <span title><i nz-icon type="book" ></i><span class="nav-text" >Livres</span></span>
+        <ul>
+          <li nz-menu-item>Show</li>
+          <li nz-menu-item (click)="showAddModal()">Add</li>
+        </ul>
+      </li>
+&lt;!&ndash;
+      <li nz-menu-item><span><i nz-icon type="file"></i><span class="nav-text">File</span></span></li>
+&ndash;&gt;
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header style="background: #fff; padding:0;">
+      <i class="trigger" nz-icon [type]="isCollapsed?'menu-unfold':'menu-fold'" (click)="isCollapsed=!isCollapsed"></i>
+      <h3 style="float: right;margin-right: 50px;color: rgb(0, 21, 41);font-family: pacifico">Bibliothèque</h3>
+    </nz-header>
+    <nz-content class="container-fluid" style="margin:0 16px;">
+      <nz-breadcrumb class="row" style="margin:16px 0;">
+        <nz-breadcrumb-item><h2 style="color: rgb(0, 21, 41) ;font-family: pacifico">Livres</h2></nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div style="padding:24px; background: #fff; min-height: 360px;">
+
+
+          <router-outlet></router-outlet>
+
+      </div>
+    </nz-content>
+    <nz-footer style="text-align: center;">©2019 Implement By <b><span style="color: rgb(0, 21, 41);font-family: pacifico">Benbaha Osama</span></b></nz-footer>
+  </nz-layout>
+</nz-layout>
+<ng-template #trigger>
+  <i nz-icon type="up"></i>
+</ng-template>
+-->
+<link href="../assets/css/layout.css" rel="stylesheet" type="text/css" media="all">
+
+<div class="wrapper row0" >
+  <div id="topbar" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <div class="fl_left">
+      <ul class="nospace inline pushright">
+        <li><i class="fa fa-phone"></i> +212 (06) 24536895</li>
+        <li><i class="fa fa-envelope-o"></i> OB-Library@ensa.com</li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul class="faico clear">
+        <li><a class="faicon-facebook" (click)="getRatedLivres()"><i class="padTop fa fa-facebook"></i></a></li>
+        <li><a class="faicon-pinterest" routerLink="home"><i class="padTop fa fa-pinterest"></i></a></li>
+        <li><a class="faicon-twitter" routerLink="home"><i class="padTop fa fa-twitter"></i></a></li>
+        <li><a class="faicon-dribble" routerLink="home"><i class="padTop fa fa-dribbble"></i></a></li>
+        <li><a class="faicon-linkedin" routerLink="home"><i class="padTop fa fa-linkedin"></i></a></li>
+        <li><a class="faicon-google-plus" routerLink="home"><i class="padTop fa fa-google-plus"></i></a></li>
+        <li><a class="faicon-rss" routerLink="home"><i class="padTop fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<div class="wrapper row1">
+  <header id="header" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <div id="logo" class="fl_left">
+      <h1><a routerLink="home">OB Library</a></h1>
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+        <li><strong>Fax:</strong><br>
+          +212 (05) 12 24 35 69</li>
+        <li><strong>Tel:</strong><br>
+          +212 (06) 25 36 25 15</li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </header>
+</div>
+<!-- ################################################################################################ -->
+<div class="wrapper row2">
+  <nav id="mainav" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <ul class="clear">
+      <li class="active"><a routerLink="home">Home</a></li>
+      <li><a class="drop" routerLink="home"> <span style="width: 5px; opacity: 0.01">..</span>Pages</a>
+        <ul>
+          <li><a routerLink="gallerie" (click)="toHome()" >Gallery</a></li>
+          <li><a routerLink="livres" (click)="toLivre()">Books</a></li>
+        </ul>
+      </li>
+
+      <!-- <li><a routerLink="home">Link Text</a></li>
+      <li><a routerLink="home">Long Link Text</a></li> -->
+    </ul>
+    <!-- ################################################################################################ -->
+  </nav>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!--<div class="wrapper bgded overlay" style="background-image:url('../assets/images/demo/backgrounds/01.jpg');">
+  <div id="pageintro" class="hoc clear">
+    &lt;!&ndash; ################################################################################################ &ndash;&gt;
+    <article class="introtxt">
+      <h2 class="heading" style="color: #ffffff">Bienvenue !</h2>
+      <p>La <span style="color: #82B440;font-size: 35px;font-weight: bold">Plus Grande </span>Bibliotèque Au Maroc </p>
+      <footer>
+        <ul class="nospace inline pushright">
+          <li><a class="btn" routerLink="home">Se Connecter</a></li>
+          <li><a class="btn inverse" routerLink="home">S'inscrire</a></li>
+        </ul>
+      </footer>
+    </article>
+    &lt;!&ndash; ################################################################################################ &ndash;&gt;
+  </div>
+</div>-->
+
+  <router-outlet></router-outlet>
+
+<!-- ################################################################################################ -->
+<div class="wrapper row4" style="background-color: grey" >
+  <div class="hoc container clear" >
+    <h4 style="color: #82B440;font-size: 50px;font-weight: bold; text-shadow: 5px 5px 5px #252b34;margin-bottom: 40px;text-decoration: underline;">Les Plus Visités </h4>
+    <!-- ################################################################################################ -->
+    <ul class="nospace elements" >
+      <li *ngFor="let b of ratedLivres; index as i" class="one_third" [ngClass]="{'first': i==0}">
+        <article >
+          <figure >
+            <img src='{{b.img}}'  alt="" style="width:100%;">
+            <figcaption><a routerLink="home">Voir Details &raquo;</a></figcaption>
+          </figure>
+          <div class="txtwrap" style="height: 200px;">
+            <h6 class="heading"> {{b.titre}} </h6>
+            <p>{{b.description | slice:0:100}}... </p>
+          </div>
+        </article>
+      </li>
+      <!--<li class="one_third">
+        <article>
+          <figure><img src="../assets/images/demo/gallery/02.jpg" alt="">
+            <figcaption><a routerLink="home">Voir Details &raquo;</a></figcaption>
+          </figure>
+          <div class="txtwrap">
+            <h6 class="heading">'Harry Potter and the Sorcerer's Stone' by J.K. Rowling</h6>
+            <p>Of course. Harry Potter is a bestseller several hundred times over, and most true fans have read the series two, or three, or ten times all the &lt;!&ndash; way through. Harry Potter and the Sorcerer's Stone is the book that started it all, as well as the least complicated, most adorable book in the series. &ndash;&gt;&hellip;</p>
+          </div>
+        </article>
+      </li>
+      <li class="one_third">
+        <article>
+          <figure><img src="../assets/images/demo/gallery/03.jpg" alt="">
+            <figcaption><a routerLink="home" >Voir Details &raquo;</a></figcaption>
+          </figure>
+          <div class="txtwrap">
+            <h6 class="heading">'1984' by George Orwell</h6>
+            <p>Yeah, it's no secret that 1984 is back on the bestseller's list. It rocketed up 9,500 percent in sales following Trump's inauguration. So I &lt;!&ndash; think it's safe to say that this is less of a cuddly, whimsical re-read, and more a politically motivated attempt to make sense of this administration's Orwellian tactics. &ndash;&gt;&hellip;</p>
+          </div>
+        </article>
+      </li>-->
+    </ul>
+    <!-- ################################################################################################ -->
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+
+<div class="wrapper row4">
+  <footer id="footer" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <div class="one_third first">
+      <h6 class="title">Contactez nous </h6>
+      <ul class="nospace linklist contact">
+        <li><i class="fa fa-map-marker"></i>
+          <address>
+            Sidi Maarouf bloc , 08 rue 15 Almousta9bal
+          </address>
+        </li>
+        <li><i class="fa fa-phone"></i> +212 (06) 25 14 26 15<br>
+          +00 (123) 456 7890</li>
+        <li><i class="fa fa-fax"></i> +212 (05) 24 15 35 65</li>
+        <li><i class="fa fa-envelope-o"></i> OB-Library@ensa.com</li>
+      </ul>
+    </div>
+    <!-- <div class="one_third">
+      <h6 class="title">Egestas risus sed</h6>
+      <ul class="nospace linklist">
+        <li><a routerLink="home">class aptent taciti sociosqu ad litora</a></li>
+        <li><a routerLink="home">per conubia nostra inceptos himenaeos</a></li>
+        <li><a routerLink="home">donec elit metus malesuada quis</a></li>
+        <li><a routerLink="home">molestie convallis cursus eros donec</a></li>
+        <li><a routerLink="home">elit turpis ornare auctor mattis feugiat</a></li>
+      </ul>
+    </div> -->
+    <div class="one_third" >
+      <h6 class="title">Plus ! </h6>
+      <p class="btmspace-30">Nous sommes toujours disponible ...  </p>
+      <form method="post" action="#">
+        <fieldset>
+          <legend>Newsletter:</legend>
+          <input class="btmspace-15" type="text" value="" placeholder="Name">
+          <input class="btmspace-15" type="text" value="" placeholder="Email">
+          <button type="submit" value="submit">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+    <!-- ################################################################################################ -->
+  </footer>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row5">
+  <div id="copyright" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <p class="fl_left">Copyright &copy; 2019 - All Rights Reserved - <a routerLink="home">OB Library</a></p>
+    <p class="fl_right"> by <a target="_blank" routerLink="home" title="Free Website Templates">Benbaha Osama</a></p>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<a id="backtotop" href="#top" ><i class="fa fa-chevron-up"></i></a>
+
+<!-- JAVASCRIPTS -->
+
+<!-- IE9 Placeholder Support -->
+
+

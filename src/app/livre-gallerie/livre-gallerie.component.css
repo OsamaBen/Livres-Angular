@@ -1,0 +1,22 @@
+li>figure>img {
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  line-height: normal;
+  vertical-align: middle;
+}
+
+.container{
+  padding:5%;
+}
+.container .img{
+  text-align:center;
+}
+.container .details{
+  border-left:3px solid #ded4da;
+}
+.container .details p{
+  font-size:15px;
+  font-weight:bold;
+}

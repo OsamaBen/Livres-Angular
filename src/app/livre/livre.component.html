@@ -1,0 +1,229 @@
+<h4 align="center" style="color: #002140 ; margin-top: 20px;">Liste des livres  </h4><br>
+<div class="wrapper bgded overlay livreContainer" style="margin-bottom: 50px;">
+<select name="colors" id="color" #color (change)="selectedColor = color.value"   style="cursor: pointer">
+  <!--(change)="onColorChange(color.value)"-->
+  <option value="primary"> Primary</option>
+  <option value="danger"> Danger</option>
+  <option value="dashed"> Dashed</option>
+</select>
+<button style="text-align: right"  nz-button nzType="dashed" (click)="showModal()">
+  <span style="color: #1890ff">Ajouter <i nz-icon type="plus" theme="outline"></i></span>
+</button>
+<!--<div *ngIf="isVisible ; then addButton ; else editButton"></div>
+<ng-template #addButton>
+  <button style="text-align: right"  nz-button nzType="dashed" (click)="showModal()">
+    <span style="color: #1890ff">Ajouter <i nz-icon type="plus" theme="outline"></i></span>
+  </button>
+</ng-template>
+<ng-template  #editButton >
+  <button style="text-align: right"  nz-button nzType="dashed" (click)="showModal()">
+    <span style="color: #1890ff">Modifier <i nz-icon type="plus" theme="outline"></i></span>
+  </button>
+</ng-template>-->
+<p-table #dt [columns]="cols" [value]="livres" [paginator]="true" [rows]="5" >
+  <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i nz-icon type="search" theme="outline" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+      <th >Actions</th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns"  [ngSwitch]="col.field">
+        <input *ngSwitchCase="'id'" pInputText type="text" class="fullWidth" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+        <input *ngSwitchCase="'titre'" pInputText type="text" class="fullWidth" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+        <input *ngSwitchCase="'auteur'" pInputText type="text" class="fullWidth" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+        <div *ngSwitchCase="'year'">
+          Value > <span *ngIf="yearFilter">{{yearFilter}}</span><span *ngIf="!yearFilter">1940</span>
+          <i class="fa fa-close" (click)="yearFilter=null;dt.filter(null, col.field, col.filterMatchMode)" style="cursor:pointer" *ngIf="yearFilter"></i>
+          <p-slider  [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="yearFilter" [min]="1940" [max]="2019" (onChange)="onYearChange($event, dt)"></p-slider>
+        </div>
+        <p-dropdown *ngSwitchCase="'categorie'" [options]="categorie" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+        <!--<p-multiSelect *ngSwitchCase="'statut'" [options]="statut" defaultLabel="Tous" (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>-->
+        <p-dropdown *ngSwitchCase="'statut'" [options]="statut" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns" align="center">
+        <span *ngIf="rowData[col.field]!='Disponible' && rowData[col.field]!='Non Disponible'">{{rowData[col.field]}}</span>
+        <span *ngIf="rowData[col.field]=='Disponible'"><i nz-icon type="check" theme="outline"></i></span>
+        <span *ngIf="rowData[col.field]=='Non Disponible'"><i nz-icon type="close" theme="outline"></i></span>
+      </td>
+      <td align="center">
+        <div style="width: 100%" class="row">
+          <div class="col-6" >
+            <button   nz-button [nzType]="selectedColor"  (click)="showModal2(rowData['id'])" >
+              <i nz-icon type="edit" theme="outline"></i>
+            </button>
+          </div>
+          <div class="col-6">
+            <button nz-popconfirm nzTitle="Etes-vous sûr de vouloir supprimer ce livre ??" (nzOnConfirm)="confirm(rowData['id'])" (nzOnCancel)="cancel()" nzPlacement="bottomRight" nz-button>
+              <i nz-icon type="delete" theme="outline" ></i>
+            </button>
+          </div>
+        </div>
+        <!--<button nz-button nzType="danger" (click)="supprimerLivre(rowData['id'])">
+          <i nz-icon type="delete" theme="outline" ></i>
+        </button>-->
+      </td>
+
+    </tr>
+  </ng-template>
+</p-table>
+
+<!--******************************** Modals ******************************-->
+
+<nz-modal *ngIf="isVisible" [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="annuler()">
+  <ng-template #modalTitle >
+    <h6 style="color: #1890ff ">Ajouter Nouveau livre</h6>
+  </ng-template>
+
+  <ng-template #modalContent>
+    <form novalidate [formGroup]="addForm">
+    <table width="100%" class="tabl2">
+      <tr width="100%">
+        <td width="20%"> <b style="color: rgb(0, 21, 41)">Titre :</b> </td>
+        <td>
+              <input  type="text" class="form-control" [class.is-invalid]="addForm.get('titre').invalid && addForm.get('titre').touched" [class.is-valid]="addForm.get('titre').valid && addForm.get('titre').touched" formControlName="titre" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        </td>
+        <br>
+        <small style="font-weight: bold" class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('titre').value === '' && addForm.get('titre').touched ">Titre Obligatoire !</small>
+        <small class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('titre').value.length < 3 && addForm.get('titre').value !== '' ">minLength = 3 caractères !</small>
+        <small class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('titre').errors?.forbiddenTitre">{{addForm.get('titre').errors?.forbiddenTitre.value}} Not Allowed </small>
+      </tr>
+      <tr width="100%">
+        <td width="20%"> <b style="color: rgb(0, 21, 41)">Auteur :</b> </td>
+        <td>
+          <input  type="text" class="form-control" [class.is-invalid]="addForm.get('auteur').invalid && addForm.get('auteur').touched" [class.is-valid]="addForm.get('auteur').valid && addForm.get('auteur').touched" formControlName="auteur" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        </td>
+        <br>
+        <small style="font-weight: bold" class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('auteur').value === '' && addForm.get('auteur').touched ">Auteur Obligatoire !</small>
+        <small class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('auteur').value.length < 3 && addForm.get('auteur').value !== '' ">minLength = 3 caractères !</small>
+        <small class="text-danger" style="margin-left: 5px" *ngIf="addForm.errors?.different" > Auteur != Titre !! </small>
+      </tr>
+      <tr>
+        <td width="20%"><b style="color: rgb(0, 21, 41)">Categorie :</b> </td>
+        <td>
+            <div class="input-group mb-3">
+              <select class="custom-select" id="inputGroupSelect02" formControlName="categorie" [class.is-invalid]="addForm.get('categorie').invalid && addForm.get('categorie').touched" [class.is-valid]="addForm.get('categorie').valid && addForm.get('categorie').touched">
+                <option selected disabled>Choose...</option>
+                <option value="Romance">Romance</option>
+                <option value="Drama">Drama</option>
+                <option value="Advanture">Advanture</option>
+                <option value="Horor">Horor</option>
+              </select>
+              <div class="input-group-append">
+                <label class="input-group-text" for="inputGroupSelect02">Options</label>
+              </div>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><b style="color: rgb(0, 21, 41)">Year :</b> </td>
+        <td>
+          <nz-year-picker formControlName="year" [class.is-invalid]="addForm.get('year').invalid && addForm.get('year').touched" [class.is-valid]="addForm.get('year').valid && addForm.get('year').touched"  nzPlaceHolder="Select year"></nz-year-picker> <!--[(ngModel)]="date" (ngModelChange)="onChange($event)"-->
+            <!--<input type="text"  class="form-control"  aria-label="Small" aria-describedby="inputGroup-sizing-sm">-->
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><b style="color: rgb(0, 21, 41)">Statut :</b> </td>
+        <td>
+          <div class="input-group mb-3">
+            <select class="custom-select" id="inputGroupSelect05" formControlName="statut" [class.is-invalid]="addForm.get('statut').invalid && addForm.get('statut').touched" [class.is-valid]="addForm.get('statut').valid && addForm.get('statut').touched">
+              <option selected disabled>Choose...</option>
+              <option value="Disponible">Disponible</option>
+              <option value="Non Disponible">Non Disponible</option>
+            </select>
+            <div class="input-group-append">
+              <label class="input-group-text" for="inputGroupSelect05">Options</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><b style="color: rgb(0, 21, 41)">Description :</b> </td>
+        <td>
+          <textarea   class="form-control" formControlName="description" [class.is-invalid]="addForm.get('description').invalid && addForm.get('description').touched" [class.is-valid]="addForm.get('description').valid && addForm.get('description').touched" aria-label="Small" aria-describedby="inputGroup-sizing-sm"></textarea>
+        </td>
+      </tr>
+    </table>
+    </form>
+
+
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <span> </span>
+    <button nz-button nzType="default"  (click)="annuler()">Annuler</button>
+    <button nz-button nzType="primary" (click)="ajouterLivre()" [nzLoading]="isConfirmLoading">Ajouter</button>
+  </ng-template>
+</nz-modal>
+
+
+<nz-modal *ngIf="isVisible2" [(nzVisible)]="isVisible2" [nzTitle]="modalTitle2" [nzContent]="modalContent2" [nzFooter]="modalFooter2" (nzOnCancel)="annuler()">
+  <ng-template #modalTitle2>
+    <h6 style="color: #1890ff "> Modifier livre </h6>
+  </ng-template>
+
+  <ng-template #modalContent2>
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="idmod">Id</span>
+      </div>
+      <input [(ngModel)]="newLiv.id" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" disabled>
+    </div>
+
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="titremod">Titre</span>
+      </div>
+      <input [(ngModel)]="newLiv.titre" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="auteurmod">Auteur</span>
+      </div>
+      <input [(ngModel)]="newLiv.auteur" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <select class="custom-select" [(ngModel)]="newLiv.categorie">
+        <option selected disabled><b>Categorie</b> </option>
+        <option value="Romance">Romance</option>
+        <option value="Drama">Drama</option>
+        <option value="Advanture">Advanture</option>
+        <option value="Horor">Horor</option>
+      </select>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="yearmod">Year</span>
+      </div>
+      <input type="text" [(ngModel)]="newLiv.year" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <select class="custom-select" [(ngModel)]="newLiv.statut" >
+        <option selected disabled><b>Statut</b> </option>
+        <option value="Disponible">Disponible</option>
+        <option value="Non Disponible">Non Disponible</option>
+      </select>
+    </div>
+
+  </ng-template>
+
+  <ng-template #modalFooter2>
+    <span> </span>
+    <button nz-button nzType="default" (click)="annuler()" >Annuler</button>
+    <button nz-button nzType="primary" (click)="modifierLivre()" [nzLoading]="isConfirmLoading">Modifier</button>
+  </ng-template>
+</nz-modal>
+</div>
