@@ -8,7 +8,7 @@ import {select, Store} from '@ngrx/store';
 import { getLivreState, getShowAddModal, getShowEditModal} from './store/selectors/livre.selector';
 import {LivreState} from './store/state/livre.state';
 import {CloseModalAction, ShowAddModalAction, ShowEditModalAction} from './store/actions/livre.action';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators , FormArray} from '@angular/forms';
 import {forbiddenTitreValidateur} from '../shared/titre.validator';
 import {passwordValidator} from '../shared/password.validator';
 
@@ -82,6 +82,7 @@ export class LivreComponent implements OnInit, OnDestroy {
     this.addForm = this.fb.group({
       titre: ['', [Validators.required , Validators.minLength(3), forbiddenTitreValidateur] ],
       auteur : ['' , Validators.required ],
+      auteurListe: this.fb.array([]),
       categorie : ['', Validators.required],
       year : ['', Validators.required],
       statut : ['', Validators.required],
@@ -208,5 +209,11 @@ export class LivreComponent implements OnInit, OnDestroy {
     this.selectedColor = this.colors.filter( col => col.label === val)[0].value;
    // console.log(this.colors.filter( col => col.label === val));
   }
+  get AuteurListe() {
+    return this.addForm.get('auteurListe') as FormArray ;
+  }
 
+  AjouterAuteur() {
+    this.AuteurListe.push(this.fb.control(''));
+  }
 }

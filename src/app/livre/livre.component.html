@@ -101,9 +101,13 @@
         <small class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('titre').errors?.forbiddenTitre">{{addForm.get('titre').errors?.forbiddenTitre.value}} Not Allowed </small>
       </tr>
       <tr width="100%">
+        <!--<button (click)="AjouterAuteur()"><i nz-icon type="plus-circle" theme="outline"></i></button>-->
         <td width="20%"> <b style="color: rgb(0, 21, 41)">Auteur :</b> </td>
         <td>
-          <input  type="text" class="form-control" [class.is-invalid]="addForm.get('auteur').invalid && addForm.get('auteur').touched" [class.is-valid]="addForm.get('auteur').valid && addForm.get('auteur').touched" formControlName="auteur" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          <input  type="text" class="form-control" [class.is-invalid]="addForm.get('auteur').invalid && addForm.get('auteur').touched" [class.is-valid]="addForm.get('auteur').valid && addForm.get('auteur').touched && addForm.get('titre').valid" formControlName="auteur" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          <!--<div formArrayName="AuteurListe" *ngFor="let auteur of AuteurListe.controls; let i = index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>-->
         </td>
         <br>
         <small style="font-weight: bold" class="text-danger" style="margin-left: 5px" *ngIf="addForm.get('auteur').value === '' && addForm.get('auteur').touched ">Auteur Obligatoire !</small>
